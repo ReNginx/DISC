@@ -1,6 +1,8 @@
 export MUJOCO_GL=egl
 export TOKENIZERS_PARALLELISM=true
-export CUDA_VISIBLE_DEVICES=1
+export CUDA_VISIBLE_DEVICES=0
+
+ckpt_path=$1
 
 python train.py \
     --config-name=hylap \
@@ -17,4 +19,4 @@ python train.py \
     +stage=test \
     data.eval_config.num_parallel=20 \
     data.eval_config.num_episodes_per_task=20 \
-    +ckpt_path=/mnt/sda/renhanxiang/Project/lang2policy/HyLaP/logs/hylap_ntasks/tasks_80_job_05/checkpoints/epoch_39-val_loss_0.0075_success_rate_0.0000.ckpt
+    +ckpt_path=$ckpt_path

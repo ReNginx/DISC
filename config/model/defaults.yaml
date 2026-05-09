@@ -27,7 +27,7 @@ image_encoder:
   _target_: model.image_encoders.ResNetEncoder
   backbone: "resnet18"
   feature_dim: 512
-  convert_bn2ln: false
+  convert_bn2ln: true
   pretrained: true
   freeze_backbone: false
 

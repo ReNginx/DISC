@@ -1,6 +1,5 @@
 [project]
 name = "disc"
-description = "DISC: Distilled HyLaP — minimal release of the Hyper Language-Action Policy"
 version = "0.1.0"
 readme = "README.md"
 requires-python = "==3.10.*"
