@@ -1,6 +1,4 @@
-export MUJOCO_GL=osmesa
 export TOKENIZERS_PARALLELISM=true
-export CUDA_VISIBLE_DEVICES=$1
 
 python train.py \
     --config-name=hylap \

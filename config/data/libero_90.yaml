@@ -6,10 +6,9 @@ defaults:
 _target_: dataloader.libero_original_datamodule.LiberoOriginalDataModule
 
 # Dataset parameters
-# task_suite_name: "libero_90_new"
-# data_root_path: ${work_dir}/data/libero-original
-task_suite_name: "libero_90_no_noops"
-data_root_path: "/share/250010208/hypernet/dataset/"
+task_suite_name: "libero_90"
+data_root_path: ${work_dir}/data/libero
+
 
 # Dataset dimensions
 state_dim: 8
