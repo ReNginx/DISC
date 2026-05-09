@@ -1,0 +1,9 @@
+defaults:
+  - _self_
+
+
+batch_size: 256
+num_workers: 20
+horizon: ${horizon}
+image_size: [224, 224]
+train_val_split: 0.98

@@ -1,0 +1,10 @@
+open_the_middle_drawer_of_the_cabinet.hdf5   
+put_the_bowl_on_top_of_the_cabinet.hdf5
+open_the_top_drawer_and_put_the_bowl_inside.hdf5
+put_the_cream_cheese_in_the_bowl.hdf5
+push_the_plate_to_the_front_of_the_stove.hdf5
+put_the_wine_bottle_on_the_rack.hdf5
+put_the_bowl_on_the_plate.hdf5
+put_the_wine_bottle_on_top_of_the_cabinet.hdf5
+put_the_bowl_on_the_stove.hdf5
+turn_on_the_stove.hdf5

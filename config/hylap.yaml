@@ -1,0 +1,11 @@
+# Main configuration for HyLaP trainer using HyPoGen2
+# @package _global_
+
+defaults:
+  - default
+  - model: hylap
+  - _self_
+
+# Experiment settings
+experiment_name: "hylap"
+

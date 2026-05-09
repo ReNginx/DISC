@@ -1,0 +1,81 @@
+[project]
+name = "disc"
+description = "DISC: Distilled HyLaP — minimal release of the Hyper Language-Action Policy"
+version = "0.1.0"
+readme = "README.md"
+requires-python = "==3.10.*"
+
+dependencies = [
+    "accelerate>=0.25.0",
+    "einops",
+    "huggingface-hub[cli]",
+    "matplotlib",
+    "rich",
+    "sentencepiece==0.1.99",
+    "timm==0.9.10",
+    "tokenizers",
+    "torch>=2.7.1",
+    "torchvision",
+    "torchaudio",
+    "wandb",
+    "lightning>=2.5.2",
+    "ipython>=8.18.1",
+    "imageio[ffmpeg]==2.34.2",
+    "robosuite==1.4.1",
+    "bddl==1.0.1",
+    "easydict",
+    "cloudpickle",
+    "gym",
+    "future",
+    "pydantic==2.10.6",
+    "numpy<=1.26.4",
+    "pillow>=10.4.0",
+    "hydra-core>=1.3.2",
+    "minlora @ https://github.com/cccntu/minLoRA.git",
+    "ipykernel>=6.30.1",
+    "libero",
+    "metaworld>=3.0.0",
+    "h5py>=3.14.0",
+    "scipy",
+    "gymnasium>=1.2.0",
+    "termcolor",
+    "av>=15.1.0",
+    "transformers>=4.50.1",
+    "peft>=0.18.0",
+    "tabulate",
+    "albumentationsx>=2.0.12",
+    "opencv-python",
+]
+
+[project.optional-dependencies]
+dev = ["black>=24.2.0", "ipython", "pre-commit", "ruff>=0.2.2"]
+
+[tool.black]
+line-length = 121
+target-version = ["py38", "py39", "py310"]
+preview = true
+
+[tool.ruff]
+line-length = 121
+target-version = "py38"
+
+[tool.ruff.lint]
+select = ["A", "B", "E", "F", "I", "RUF", "W"]
+ignore = ["F722"]
+
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["E402", "F401"]
+
+[tool.uv]
+override-dependencies = [ "torch==2.8.0+cu126", "torchvision==0.23.0+cu126", "torchaudio==2.8.0+cu126", "numpy==1.26.4" ]
+
+[[tool.uv.index]]
+name = "pytorch-cu126"
+url = "https://download.pytorch.org/whl/cu126"
+explicit = true
+
+[tool.uv.sources]
+libero = { path = "./third_party/modified_libero", editable = true }
+torch = { index = "pytorch-cu126" }
+torchvision = { index = "pytorch-cu126" }
+torchaudio = { index = "pytorch-cu126" }

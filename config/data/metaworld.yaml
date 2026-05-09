@@ -1,0 +1,31 @@
+# Meta-World Dataset Configuration
+# @package data
+defaults:
+  - defaults
+_target_: dataloader.meta_world_datamodule.MetaWorldDataModule
+
+# Dataset parameters
+# task_suite_name: "meta_world"
+# data_root_path: ${work_dir}/data/meta-world
+
+task_suite_name: "meta_world"
+data_root_path: "data/meta-world"
+
+# Train/test split files
+train_split_file: "config/data/meta-world_splits/train.txt"  # Path to train split txt file
+test_split_file: "config/data/meta-world_splits/test.txt"   # Path to test split txt file
+state_dim: 8
+action_dim: 4
+
+# Evaluation configuration
+eval_config:
+  enabled: false
+  task_suite_name: "meta_world"
+  num_episodes_per_task: 20
+  num_parallel: 20  # Number of parallel environments (<=num_episodes_per_task)
+  max_steps: 500
+  camera_name: "custom"
+  metrics_dir: "metrics"
+  video_dir: "videos"
+  eval_frequency: ${check_val_every_n_epoch}
+  split_txt: "config/data/meta-world_splits/train.txt"

@@ -1,0 +1,20 @@
+# Weights & Biases Logger Configuration
+# @package logger
+
+_target_: lightning.pytorch.loggers.WandbLogger
+
+# Project settings
+project: "hylap-diffusion-policy"
+name: ${experiment_name}
+tags: ["diffusion_policy", "libero", "hylap"]
+
+# Logging settings
+save_dir: ${log_dir}
+offline: false
+log_model: true
+
+# Additional settings
+config:
+  experiment_name: ${experiment_name}
+  seed: ${seed}
+  data_dir: ${data_dir}

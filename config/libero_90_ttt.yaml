@@ -1,0 +1,38 @@
+defaults:
+  - default
+  - model: hylap
+  - override data: libero_90
+  - _self_
+
+# Experiment settings
+stage: test
+
+task_suite_name: "libero_spatial_no_noops"
+data_root_path: "/share/250010208/hypernet/dataset"
+
+demo_num: 10
+finetune_steps: 100
+finetune_method: policynet
+
+data:
+  eval_config:
+    enabled: true
+    num_episodes_per_task: 20
+    task_suite_name: "libero_spatial"
+    split_txt: "config/data/libero_spatial_splits/libero_spatial-test.txt"
+
+trainer:
+  limit_val_batches: 1
+  inference_mode: false
+
+model:
+  test_time_training_config:
+    enabled: true
+    max_demos: ${demo_num}
+    num_adaptation_steps: ${finetune_steps}
+    adaptation_method: ${finetune_method}
+
+experiment_name: "${hydra:runtime.choices.data}_ttt" 
+version: "${hydra:runtime.choices.model}/demo_${demo_num}_finetune_steps_${finetune_steps}_method_${finetune_method}"
+exp_log_dir: ${log_dir}/${experiment_name}/${version}
+checkpoint_dir: ${exp_log_dir}/checkpoints

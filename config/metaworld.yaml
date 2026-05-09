@@ -1,0 +1,13 @@
+defaults:
+  - default
+  - model: null
+  - override data: metaworld
+  - _self_
+
+experiment_name: "${hydra:runtime.choices.data}" 
+version: "${hydra:runtime.choices.model}"
+exp_log_dir: ${log_dir}/${experiment_name}/${version}
+checkpoint_dir: ${exp_log_dir}/checkpoints
+data:
+  eval_config:
+    enabled: false

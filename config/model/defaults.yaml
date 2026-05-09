@@ -1,0 +1,87 @@
+# Default configurations for model evaluation
+# @package _global_
+
+defaults:
+  - _self_
+
+eval_config: ${data.eval_config}
+data_config: ${data}
+
+# Default training configuration
+optimizer:
+  _target_: torch.optim.AdamW
+  lr: 1e-4
+  weight_decay: 1e-4
+
+lr_scheduler:
+  _target_: torch.optim.lr_scheduler.CosineAnnealingLR
+  T_max: ${max_epochs}
+  eta_min: 1e-7
+
+# Default loss weights
+loss_weights:
+  action_loss: 1.0
+
+# Default encoder configurations
+image_encoder:
+  _target_: model.image_encoders.ResNetEncoder
+  backbone: "resnet18"
+  feature_dim: 512
+  convert_bn2ln: false
+  pretrained: true
+  freeze_backbone: false
+
+# language_encoder:
+#   _target_: model.language_encoders.GRULanguageEncoder
+#   embed_dim: 256
+#   hidden_dim: 256
+#   output_dim: 256
+#   num_layers: 1
+#   dropout: 0.1
+#   bidirectional: false
+#   output_sequence: false  # can be true for DiffusionTrainer
+#   tokenizer_model: "google-bert/bert-base-uncased"
+
+# 语言编码器配置 - 选项2: T5 (内置 T5 tokenizer)
+language_encoder:
+  _target_: model.language_encoders.T5LanguageEncoder
+  model_name: "t5-small"
+  max_length: 32
+  output_dim: 256
+  output_sequence: true
+  freeze_backbone: true
+  dropout: 0
+
+state_encoder:
+  _target_: torch.nn.Linear
+  in_features: ${data.state_dim}  # LIBERO state dimension
+  out_features: 256
+
+# Default task configuration
+action_dim: ${data.action_dim}
+state_dim: ${data.state_dim}
+
+# Default conditioning
+use_state_conditioning: true 
+
+# Fast adaptation configuration
+test_time_training_config:
+  enabled: false
+  
+  # Adaptation strategy
+  adaptation_method: "lora"  # Options: "full_model", "head_only", "last_layers", "lora"
+  
+  # Learning parameters
+  adaptation_lr: 1e-3
+  adaptation_weight_decay: 1e-5
+  num_adaptation_steps: 500
+
+  horizon: ${horizon}
+  data_root_path: ${data.data_root_path}
+  
+  # LoRA-specific parameters (if adaptation_method is "lora")
+  lora_rank: 16
+  
+  # Data parameters
+  adaptation_batch_size: 256
+  max_demos: 10  # Use all available demos if null

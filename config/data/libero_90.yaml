@@ -1,0 +1,36 @@
+# LIBERO-90 Dataset Configuration
+# @package data
+defaults:
+  - defaults
+
+_target_: dataloader.libero_original_datamodule.LiberoOriginalDataModule
+
+# Dataset parameters
+# task_suite_name: "libero_90_new"
+# data_root_path: ${work_dir}/data/libero-original
+task_suite_name: "libero_90_no_noops"
+data_root_path: "/share/250010208/hypernet/dataset/"
+
+# Dataset dimensions
+state_dim: 8
+action_dim: 7
+
+# Task description options
+include_scene_name: false  # Whether to include scene name in task descriptions
+
+# Train/test split files
+train_split_file: "config/data/libero90_splits/libero_90-train.txt"  
+test_split_file: "config/data/libero90_splits/libero_90-test.txt"  
+
+# Evaluation configuration
+eval_config:
+  enabled: false
+  task_suite_name: "libero_90"
+  num_episodes_per_task: 20
+  num_parallel: 20  # Number of parallel environments (<=num_episodes_per_task)
+  max_steps: 400
+  camera_name: "agentview"
+  metrics_dir: "metrics"
+  video_dir: "videos"
+  eval_frequency: ${check_val_every_n_epoch}
+  split_txt: "config/data/libero90_splits/libero_90-train.txt"

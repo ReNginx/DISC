@@ -1,0 +1,41 @@
+# Default configuration file - base settings shared across all experiments
+# @package _global_
+
+defaults:
+  - data: libero_90
+  - trainer: default
+  - logger: tensorboard
+  - _self_
+
+# Experiment settings
+seed: 3407
+debug: false
+horizon: 8
+
+# Paths
+version: debug
+work_dir: ${oc.env:PWD}
+log_dir: ${work_dir}/logs/
+exp_log_dir: ${log_dir}/${experiment_name}/${version}
+checkpoint_dir: ${exp_log_dir}/checkpoints
+
+# Training settings
+max_epochs: 50
+check_val_every_n_epoch: 5
+log_every_n_steps: 5
+
+# Device settings
+accelerator: "auto"
+devices: 1
+precision: bf16-mixed
+
+# Reproducibility
+deterministic: false
+
+# Hydra settings
+hydra:
+  run:
+    dir: ${exp_log_dir}
+  sweep:
+    dir: ${exp_log_dir}
+    subdir: ""

@@ -1,0 +1,42 @@
+# HyLaP trainer with HyPoGen2 policy
+# @package model
+
+defaults:
+  - defaults
+
+_target_: trainer.hylap_trainer.HyLaPTrainer
+
+# Language encoder override for sequence output
+language_encoder:
+  output_sequence: true
+
+
+# Policy wrapper
+policy_network:
+  _target_: model.hylap.hypogen2.HyLaPHypoGenPolicy
+  hidden_dim: 320
+  z_dim: 128
+  weight_dim: 128
+  enc_dec_dim: 128
+  opt_block_dim: 128
+  num_opt_mlp_layer: 2
+  num_enc_dec_layer: 2
+  num_layers: 1
+  weight_split_dim: 512
+  target_layers_num: 5
+  nhead: 4
+  lr_scheme_method: cosine
+  use_compile: false
+  # Enable token pathway inside policy (uses tokenizer.vocab_size)
+  text_embed_dim: 256
+  horizon: ${horizon}
+
+# Conditioning overrides
+use_language_conditioning: true
+use_early_sup: true
+
+training_strategy: "hylap"
+
+# Target lora params: 0.57M
+test_time_training_config:
+  lora_rank: 6

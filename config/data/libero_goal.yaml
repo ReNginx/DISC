@@ -1,0 +1,32 @@
+# LIBERO-10 Dataset Configuration
+# @package data
+defaults:
+  - defaults
+
+_target_: dataloader.libero_original_datamodule.LiberoOriginalDataModule
+
+# Dataset parameters
+task_suite_name: "libero_goal"
+data_root_path: ${work_dir}/data/libero-original
+
+# Dataset dimensions
+state_dim: 8
+action_dim: 7
+
+# Train/test split files
+train_split_file: null  # Path to train split txt file (optional)
+test_split_file: null   # Path to test split txt file (optional)
+
+# Evaluation configuration
+eval_config:
+  enabled: false
+  task_suite_name: "libero_goal"
+  num_episodes_per_task: 50
+  num_parallel: 5  # Number of parallel environments (<=num_episodes_per_task)
+  max_steps: 400
+  camera_name: "agentview"
+  metrics_dir: "metrics"
+  video_dir: "videos"
+  eval_frequency: ${check_val_every_n_epoch}
+  max_tasks: 10
+  split_txt: null  # No predefined split file for libero_10
