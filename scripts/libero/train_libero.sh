@@ -9,4 +9,5 @@ python train.py \
     trainer.devices=4 \
     data.eval_config.enabled=false \
     model.policy_network.use_compile=true \
+    +trainer.strategy=ddp_find_unused_parameters_true \
     max_epochs=50
