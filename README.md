@@ -1,42 +1,11 @@
-# DISC: Distilled HyLaP Release
+# DISC: Decoupling Instruction from State-Conditioned Control via Policy Generation
 
-Minimal public release of **HyLaP** (Hyper Language-Action Policy) — a hypernetwork-based
-policy that conditions on a language instruction to generate the action-decoder weights
-for a given task.
-
-This repo contains only the HyLaP model and the LIBERO / metaworld pipelines. Baseline
-methods (Diffusion Policy, BAKU, HyperZero, HyPoGen, DiT, VQ-BeT, …) and ablation
-configs from the research codebase are intentionally excluded.
-
-## What's in here
-
-```
-DISC/
-├── model/
-│   ├── hylap/                # HyLaP (HyPoGen2) policy
-│   ├── image_encoders.py
-│   └── language_encoders.py
-├── dataloader/               # LIBERO-original + metaworld data modules
-├── trainer/                  # GenericTrainer + HyLaPTrainer (Lightning)
-├── evaluator/                # LIBERO + metaworld evaluators (with TTT support)
-├── utils/                    # Module-size helpers used by HyLaP
-├── config/                   # Hydra configs
-│   ├── default.yaml
-│   ├── hylap.yaml            # main HyLaP training entry
-│   ├── libero_90{,_eval,_ttt}.yaml
-│   ├── metaworld{,_eval,_ttt}.yaml
-│   ├── data/                 # libero_90 / spatial / goal / object / 10 (long) / metaworld
-│   ├── model/{defaults,hylap}.yaml
-│   ├── trainer/default.yaml
-│   └── logger/{tensorboard,wandb}.yaml
-├── scripts/hylap/            # convenience training & evaluation shell scripts
-└── train.py                  # main entrypoint (Hydra)
-```
+The offiical repository of RSS 2026 paper "DISC: Decoupling Instruction from State-Conditioned Control via Policy Generation"
 
 Supported task suites:
 
-- **LIBERO**: `libero_90`, `libero_spatial`, `libero_goal`, `libero_object`, `libero_10` (LIBERO-Long)
-- **metaworld**
+- **LIBERO**: `libero_90`, `libero_spatial`, `libero_goal`, `libero_object`, `libero_10` 
+- **Metaworld(WIP)**
 
 ## Installation
 
@@ -53,6 +22,18 @@ uv pip install -e ./third_party/modified_libero
 bash utils/post_install.sh
 ```
 
+## Data Preparation
+
+We use the openvla version of libero (which has resolution of 256x256 and filters out no-op actions) in our experiments.
+
+You can download libero-10, libero-goal, libero-object, libero-spatial from 'https://huggingface.co/datasets/openvla/modified_libero_rlds'
+
+For libero-90, you need to download the official version of libero-90 from https://github.com/Lifelong-Robot-Learning/LIBERO then convert it into openvla version using the script provided by the openvla repository.
+
+Once you download the data, you should organize the files into following data format.
+
+/data/libero/{libero_90|libero_object|libero_spatial|libero_10|libero_goal}
+
 ## Training
 
 Train HyLaP on LIBERO-90 (default):
@@ -61,34 +42,36 @@ Train HyLaP on LIBERO-90 (default):
 python train.py --config-name=hylap
 ```
 
-Train on a different LIBERO suite or on metaworld:
+Train on a different LIBERO suite:
 
 ```bash
 python train.py --config-name=hylap data=libero_spatial
 python train.py --config-name=hylap data=libero_goal
 python train.py --config-name=hylap data=libero_object
-python train.py --config-name=hylap data=libero_10        # LIBERO-Long
-python train.py --config-name=hylap data=metaworld
-```
-
-Override common hyperparameters from the CLI:
-
-```bash
-python train.py --config-name=hylap model.optimizer.lr=5e-4 data.batch_size=64
+python train.py --config-name=hylap data=libero_10
 ```
 
 ## Evaluation
 
 ```bash
 python train.py --config-name=libero_90_eval model=hylap +ckpt_path=path/to/ckpt.ckpt
-python train.py --config-name=metaworld_eval model=hylap +ckpt_path=path/to/ckpt.ckpt
 ```
 
 ## Test-Time Training (TTT)
 
 ```bash
 python train.py --config-name=libero_90_ttt   +ckpt_path=path/to/ckpt.ckpt
-python train.py --config-name=metaworld_ttt   +ckpt_path=path/to/ckpt.ckpt
 ```
 
-Convenience shell scripts live under [scripts/hylap/](scripts/hylap/).
+## Citation 
+If you find this work helpful in your reserch, consider citing 
+```
+@inproceedings{
+ren2026disc,
+title={{DISC}: Decoupling Instruction from State-Conditioned Control via Policy Generation},
+author={Hanxiang Ren, Pei Zhou, Xunzhe Zhou, Yanchao Yang},
+booktitle={Robotics: Science and Systems 2026},
+year={2026},
+url={https://openreview.net/forum?id=i9ynkagJuj}
+}
+```

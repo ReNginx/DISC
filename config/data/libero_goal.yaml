@@ -7,7 +7,7 @@ _target_: dataloader.libero_original_datamodule.LiberoOriginalDataModule
 
 # Dataset parameters
 task_suite_name: "libero_goal"
-data_root_path: ${work_dir}/data/libero-original
+data_root_path: ${work_dir}/data/libero
 
 # Dataset dimensions
 state_dim: 8

@@ -7,8 +7,7 @@ defaults:
 # Experiment settings
 stage: test
 
-task_suite_name: "libero_spatial_no_noops"
-data_root_path: "/share/250010208/hypernet/dataset"
+task_suite_name: "libero_spatial"
 
 demo_num: 10
 finetune_steps: 100
