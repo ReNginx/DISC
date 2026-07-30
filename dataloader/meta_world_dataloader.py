@@ -96,10 +96,10 @@ class MetaWorldDataset(Dataset):
                     p=1.0
                 ),
                 A.ColorJitter(
-                    brightness=0.05,
-                    contrast=0.05,
-                    saturation=0.05,
-                    hue=0.02,
+                    brightness_range=(0.95, 1.05),
+                    contrast_range=(0.95, 1.05),
+                    saturation_range=(0.95, 1.05),
+                    hue_range=(-0.02, 0.02),
                     p=1.0
                 ),
                 img_norm_transform,
