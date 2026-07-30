@@ -97,10 +97,10 @@ class LiberoOriginalDataset(Dataset):
                         p=1.0
                     ),
                     A.ColorJitter(
-                        brightness=0.1,
-                        contrast=0.1,
-                        saturation=0.1,
-                        hue=0.05,
+                        brightness_range=(0.9, 1.1),
+                        contrast_range=(0.9, 1.1),
+                        saturation_range=(0.9, 1.1),
+                        hue_range=(-0.05, 0.05),
                         p=1.0
                     ),
                 ], p=0.8),
